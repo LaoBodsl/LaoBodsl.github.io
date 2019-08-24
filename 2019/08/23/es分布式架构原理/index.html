@@ -62,7 +62,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="EsasticSearch,">
 
 
 
@@ -73,17 +73,20 @@
 
 
 
-<meta name="description" content="这一切都是命运石之门的选择">
+<meta name="description" content="ElasticSearch如何实现分布式的搜索之前主要是lucene比较流行，而ElasticSearch就是基于lucene的分布式搜索引擎 ElasticSearch的基本存储结构index(索引) -&amp;gt; type(移除) -&amp;gt; mapping(移除) -&amp;gt; document （文档）-&amp;gt; field(字段) 分布式架构 每个索引可以分为多个shard（分片），每个sh">
+<meta name="keywords" content="EsasticSearch">
 <meta property="og:type" content="article">
 <meta property="og:title" content="es分布式架构原理">
 <meta property="og:url" content="http://yoursite.com/2019/08/23/es分布式架构原理/index.html">
 <meta property="og:site_name" content="Steins Gate">
-<meta property="og:description" content="这一切都是命运石之门的选择">
+<meta property="og:description" content="ElasticSearch如何实现分布式的搜索之前主要是lucene比较流行，而ElasticSearch就是基于lucene的分布式搜索引擎 ElasticSearch的基本存储结构index(索引) -&amp;gt; type(移除) -&amp;gt; mapping(移除) -&amp;gt; document （文档）-&amp;gt; field(字段) 分布式架构 每个索引可以分为多个shard（分片），每个sh">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-23T08:47:18.159Z">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/006y8mN6ly1g6akc5njb3j30qr0fawf2.jpg">
+<meta property="og:updated_time" content="2019-08-24T02:45:29.758Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="es分布式架构原理">
-<meta name="twitter:description" content="这一切都是命运石之门的选择">
+<meta name="twitter:description" content="ElasticSearch如何实现分布式的搜索之前主要是lucene比较流行，而ElasticSearch就是基于lucene的分布式搜索引擎 ElasticSearch的基本存储结构index(索引) -&amp;gt; type(移除) -&amp;gt; mapping(移除) -&amp;gt; document （文档）-&amp;gt; field(字段) 分布式架构 每个索引可以分为多个shard（分片），每个sh">
+<meta name="twitter:image" content="http://ww4.sinaimg.cn/large/006y8mN6ly1g6akc5njb3j30qr0fawf2.jpg">
 
 
 
@@ -296,6 +299,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/分布式搜索引擎/" itemprop="url" rel="index">
+                    <span itemprop="name">分布式搜索引擎</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -327,7 +352,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  339
                 </span>
               
 
@@ -364,7 +389,17 @@
       
 
       
-        
+        <h1 id="ElasticSearch如何实现分布式的"><a href="#ElasticSearch如何实现分布式的" class="headerlink" title="ElasticSearch如何实现分布式的"></a>ElasticSearch如何实现分布式的</h1><p>搜索之前主要是lucene比较流行，而ElasticSearch就是基于lucene的分布式搜索引擎</p>
+<h2 id="ElasticSearch的基本存储结构"><a href="#ElasticSearch的基本存储结构" class="headerlink" title="ElasticSearch的基本存储结构"></a>ElasticSearch的基本存储结构</h2><p>index(索引) -&gt; type(移除) -&gt; mapping(移除) -&gt; document （文档）-&gt; field(字段)</p>
+<h2 id="分布式架构"><a href="#分布式架构" class="headerlink" title="分布式架构"></a>分布式架构</h2><p><img src="http://ww4.sinaimg.cn/large/006y8mN6ly1g6akc5njb3j30qr0fawf2.jpg" alt=""></p>
+<p>每个索引可以分为多个shard（分片），每个shard可以存储部分数据。这样有两个好处。</p>
+<ol>
+<li>支持横向扩展。比如你现在有3T的数据，分成3个shard。每个shard就是1T的数据。若现在数据增长到4T了，我们就重新建立一个有4个shard的索引，将数据导进去。</li>
+<li>提高性能。多个数据分布在多个shard，就是多台服务器。所有的操作都是在多台机器上并行的分布式执行。提搞了吞吐量和性能。</li>
+</ol>
+<p>每个shard的数据都是多个备份的，每个shard都有一个primary shard，负责写入数据。还有几个replica shard。primary shard写入数据之后，会将数据同步到其他几个replica shard上去。</p>
+<h2 id="宕机方案"><a href="#宕机方案" class="headerlink" title="宕机方案"></a>宕机方案</h2><p>es集群有多个节点。会自动选取其中一个作为master节点。如果非master节点宕机，会由master节点让那个宕机节点上的primary shard的身份转移到其他机器上的replica shard。接着你修复了好了之后，在分配过去。</p>
+
       
     </div>
     
@@ -378,6 +413,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/EsasticSearch/" rel="tag"># EsasticSearch</a>
+          
+        </div>
       
 
       
@@ -458,8 +499,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -487,7 +537,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -498,7 +548,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -538,6 +588,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ElasticSearch如何实现分布式的"><span class="nav-number">1.</span> <span class="nav-text">ElasticSearch如何实现分布式的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ElasticSearch的基本存储结构"><span class="nav-number">1.1.</span> <span class="nav-text">ElasticSearch的基本存储结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式架构"><span class="nav-number">1.2.</span> <span class="nav-text">分布式架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#宕机方案"><span class="nav-number">1.3.</span> <span class="nav-text">宕机方案</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -565,7 +631,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">4.4k</span>
+    <span title="Site words total count">4.7k</span>
   
 </div>
 
