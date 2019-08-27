@@ -62,7 +62,7 @@
 
 
 
-  <meta name="keywords" content="ElasticSearch,">
+  <meta name="keywords" content="数据库,事务,">
 
 
 
@@ -73,20 +73,18 @@
 
 
 
-<meta name="description" content="ElasticSearch如何实现分布式的搜索之前主要是lucene比较流行，而ElasticSearch就是基于lucene的分布式搜索引擎 ElasticSearch的基本存储结构index(索引) -&amp;gt; type(移除) -&amp;gt; mapping(移除) -&amp;gt; document （文档）-&amp;gt; field(字段) 分布式架构 每个索引可以分为多个shard（分片），每个sh">
-<meta name="keywords" content="ElasticSearch">
+<meta name="description" content="事务事务是逻辑上的一组操作，要么都执行，要么都不执行。 事务的特性 原子性： 事务是最小单位，不允许分割，就是保证了事务的动作要么全部完成，要么不做。 一致性： 执行事务前后，数据保证一致，多个事务对同一个数据读取的结果是相同的。 隔离性： 并发访问数据库时，一个用户的事务不被其他事务所干扰，各并发事务之间数据库是独立的。 持久性： 一个事务被提交之后，他对数据库的改变是持久的。  并发事务所带来">
+<meta name="keywords" content="数据库,事务">
 <meta property="og:type" content="article">
-<meta property="og:title" content="es分布式架构原理">
-<meta property="og:url" content="http://yoursite.com/2019/08/23/docs/es分布式架构原理/index.html">
+<meta property="og:title" content="事务介绍">
+<meta property="og:url" content="http://yoursite.com/2019/08/27/docs/事务介绍/index.html">
 <meta property="og:site_name" content="Steins Gate">
-<meta property="og:description" content="ElasticSearch如何实现分布式的搜索之前主要是lucene比较流行，而ElasticSearch就是基于lucene的分布式搜索引擎 ElasticSearch的基本存储结构index(索引) -&amp;gt; type(移除) -&amp;gt; mapping(移除) -&amp;gt; document （文档）-&amp;gt; field(字段) 分布式架构 每个索引可以分为多个shard（分片），每个sh">
+<meta property="og:description" content="事务事务是逻辑上的一组操作，要么都执行，要么都不执行。 事务的特性 原子性： 事务是最小单位，不允许分割，就是保证了事务的动作要么全部完成，要么不做。 一致性： 执行事务前后，数据保证一致，多个事务对同一个数据读取的结果是相同的。 隔离性： 并发访问数据库时，一个用户的事务不被其他事务所干扰，各并发事务之间数据库是独立的。 持久性： 一个事务被提交之后，他对数据库的改变是持久的。  并发事务所带来">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ww4.sinaimg.cn/large/006y8mN6ly1g6akc5njb3j30qr0fawf2.jpg">
-<meta property="og:updated_time" content="2019-08-24T05:40:11.103Z">
+<meta property="og:updated_time" content="2019-08-27T02:49:00.077Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="es分布式架构原理">
-<meta name="twitter:description" content="ElasticSearch如何实现分布式的搜索之前主要是lucene比较流行，而ElasticSearch就是基于lucene的分布式搜索引擎 ElasticSearch的基本存储结构index(索引) -&amp;gt; type(移除) -&amp;gt; mapping(移除) -&amp;gt; document （文档）-&amp;gt; field(字段) 分布式架构 每个索引可以分为多个shard（分片），每个sh">
-<meta name="twitter:image" content="http://ww4.sinaimg.cn/large/006y8mN6ly1g6akc5njb3j30qr0fawf2.jpg">
+<meta name="twitter:title" content="事务介绍">
+<meta name="twitter:description" content="事务事务是逻辑上的一组操作，要么都执行，要么都不执行。 事务的特性 原子性： 事务是最小单位，不允许分割，就是保证了事务的动作要么全部完成，要么不做。 一致性： 执行事务前后，数据保证一致，多个事务对同一个数据读取的结果是相同的。 隔离性： 并发访问数据库时，一个用户的事务不被其他事务所干扰，各并发事务之间数据库是独立的。 持久性： 一个事务被提交之后，他对数据库的改变是持久的。  并发事务所带来">
 
 
 
@@ -116,13 +114,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/08/23/docs/es分布式架构原理/">
+  <link rel="canonical" href="http://yoursite.com/2019/08/27/docs/事务介绍/">
 
 
 
 
 
-  <title>es分布式架构原理 | Steins Gate</title>
+  <title>事务介绍 | Steins Gate</title>
   
 
 
@@ -259,7 +257,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/23/docs/es分布式架构原理/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/27/docs/事务介绍/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="老博">
@@ -276,7 +274,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">es分布式架构原理</h1>
+          <h1 class="post-title" itemprop="name headline">事务介绍</h1>
         
 
         <div class="post-meta">
@@ -288,8 +286,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-23T16:47:18+08:00">
-                2019-08-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-27T09:40:26+08:00">
+                2019-08-27
               </time>
             
 
@@ -311,8 +309,19 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/分布式搜索引擎/" itemprop="url" rel="index">
-                    <span itemprop="name">分布式搜索引擎</span>
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
                   </a>
                 </span>
 
@@ -329,8 +338,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/08/23/docs/es分布式架构原理/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/08/23/docs/es分布式架构原理/" itemprop="commentCount"></span>
+                <a href="/2019/08/27/docs/事务介绍/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/08/27/docs/事务介绍/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -352,7 +361,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  339
+                  925
                 </span>
               
 
@@ -368,7 +377,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  3
                 </span>
               
             </div>
@@ -389,16 +398,46 @@
       
 
       
-        <h1 id="ElasticSearch如何实现分布式的"><a href="#ElasticSearch如何实现分布式的" class="headerlink" title="ElasticSearch如何实现分布式的"></a>ElasticSearch如何实现分布式的</h1><p>搜索之前主要是lucene比较流行，而ElasticSearch就是基于lucene的分布式搜索引擎</p>
-<h2 id="ElasticSearch的基本存储结构"><a href="#ElasticSearch的基本存储结构" class="headerlink" title="ElasticSearch的基本存储结构"></a>ElasticSearch的基本存储结构</h2><p>index(索引) -&gt; type(移除) -&gt; mapping(移除) -&gt; document （文档）-&gt; field(字段)</p>
-<h2 id="分布式架构"><a href="#分布式架构" class="headerlink" title="分布式架构"></a>分布式架构</h2><p><img src="http://ww4.sinaimg.cn/large/006y8mN6ly1g6akc5njb3j30qr0fawf2.jpg" alt=""></p>
-<p>每个索引可以分为多个shard（分片），每个shard可以存储部分数据。这样有两个好处。</p>
-<ol>
-<li>支持横向扩展。比如你现在有3T的数据，分成3个shard。每个shard就是1T的数据。若现在数据增长到4T了，我们就重新建立一个有4个shard的索引，将数据导进去。</li>
-<li>提高性能。多个数据分布在多个shard，就是多台服务器。所有的操作都是在多台机器上并行的分布式执行。提搞了吞吐量和性能。</li>
+        <h1 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h1><p>事务是逻辑上的一组操作，要么都执行，要么都不执行。</p>
+<h2 id="事务的特性"><a href="#事务的特性" class="headerlink" title="事务的特性"></a>事务的特性</h2><ol>
+<li><strong>原子性：</strong> 事务是最小单位，不允许分割，就是保证了事务的动作要么全部完成，要么不做。</li>
+<li><strong>一致性：</strong> 执行事务前后，数据保证一致，多个事务对同一个数据读取的结果是相同的。</li>
+<li><strong>隔离性：</strong> 并发访问数据库时，一个用户的事务不被其他事务所干扰，各并发事务之间数据库是独立的。</li>
+<li><strong>持久性：</strong> 一个事务被提交之后，他对数据库的改变是持久的。</li>
 </ol>
-<p>每个shard的数据都是多个备份的，每个shard都有一个primary shard，负责写入数据。还有几个replica shard。primary shard写入数据之后，会将数据同步到其他几个replica shard上去。</p>
-<h2 id="宕机方案"><a href="#宕机方案" class="headerlink" title="宕机方案"></a>宕机方案</h2><p>es集群有多个节点。会自动选取其中一个作为master节点。如果非master节点宕机，会由master节点让那个宕机节点上的primary shard的身份转移到其他机器上的replica shard。接着你修复了好了之后，在分配过去。</p>
+<h2 id="并发事务所带来的问题"><a href="#并发事务所带来的问题" class="headerlink" title="并发事务所带来的问题"></a>并发事务所带来的问题</h2><ul>
+<li><strong>脏读（Dirty read）：</strong> 当一个事务正在访问数据并对其修改后，但是这种修改还没有提交到数据库，另一个事务也访问了这个数据，因为这个数据还没有提交。就称为这种数据是“脏数据”，这种行为就是脏读。</li>
+<li><strong>丢失修改（Lost to modify）：</strong> 指在一个事务读取一个数据时，另一个事务也访问了这个数据，那么在第一个事务修改之后，第二个事务也修改了这个数据，那么第一个事务修改的结果就丢失了，称为丢失修改。</li>
+<li><strong>不可重复读（Unrepeatableread）:</strong> 指在一个事务内多次读同一数据。在这个事务还没结束时，另一个事务也访问该数据。那么第一个事务两次读到的数据不一样。称为不可重复读。</li>
+<li><strong>幻读（Phantom read）：</strong> 幻读和不可重复读类似。也是在一个事务两次访问之间，另一个事务插入（删除）了一部分数据，导致两次读取的结果不一致，像幻觉一样，称为幻读。</li>
+</ul>
+<blockquote>
+<p><strong>不可重复读和幻读的区别：</strong> 不可重复读重点是修改，幻读是增加或者删除</p>
+</blockquote>
+<h2 id="事务的隔离级别"><a href="#事务的隔离级别" class="headerlink" title="事务的隔离级别"></a>事务的隔离级别</h2><ul>
+<li><strong>READ-UNCOMMITTED(读未提交)：</strong>最低的隔离级别，就是允许读没有提交的数据变更，所有问题都可能发生。</li>
+<li><strong>READ-COMMITTED(读已提交)：</strong>允许读取事务已经提交的数据，可以阻止脏读。但是幻读和不可重复读还不能避免。</li>
+<li><strong>REPEATABLE-READ(可重复读)：</strong>对同一字段的多次读取结果都是一致的，除非数据是被本身事务所修改。可以阻止脏读和不可重复读。幻读还是会发生。</li>
+<li><strong>SERIABLIZABLE(可串行化):</strong>最高的隔离级别，符合所有特性，不存在任何问题，就是效率低。</li>
+</ul>
+<h2 id="Spring中事务"><a href="#Spring中事务" class="headerlink" title="Spring中事务"></a>Spring中事务</h2><p>Spring开始事务使用注解@EnableTransactionManagment开启事务，Spring中规定了7中事务的传播行为，增强了事务的特性，还有5种隔离级别。</p>
+<h3 id="传播行为"><a href="#传播行为" class="headerlink" title="传播行为"></a>传播行为</h3><p>事务的传播行为是描述由某一个事务传播行为修饰的方法被嵌套进另一个方法的时事务如何传播。</p>
+<ul>
+<li><strong>PROPAGATION_REQUIRED:</strong> 如果当前没有事务，就新建一个，如果有就加入到这个事务。</li>
+<li><strong>PROPAGATION_SUPPORTS:</strong> 支持当前事务，如果当前没有事务，就以非事务方式执行。</li>
+<li><strong>PROPAGATION_MANDATORY：</strong> 使用当前事务，如果没有事务，就抛出异常</li>
+<li><strong>PROPAGATION_REQUIRES_NEW：</strong> 新建事务，如果当前存在事务，把当前事务挂起。</li>
+<li><strong>PROPAGATION_NOT_SUPPORTED:</strong> 以非事务方式执行操作，如果存在当前事务，把事务挂起</li>
+<li><strong>PROPAGATION_NEVER:</strong> 以非事务方式执行，如果当前存在事务，则抛出异常</li>
+<li><strong>PROPAGATION_NESTED:</strong> 如果当前存在事务，则在嵌套事务中执行，如果没有，则新建。</li>
+</ul>
+<h3 id="隔离属性"><a href="#隔离属性" class="headerlink" title="隔离属性"></a>隔离属性</h3><ul>
+<li>ISOLATION_DEFAULT:使用数据库默认的。</li>
+<li>ISOLATION_READ_UNCOMMITTED</li>
+<li>ISOLATION_READ_COMMITTED</li>
+<li>ISOLATION_UNREPEATABLE_READ</li>
+<li>ISOLATION_SERIALIZABLE</li>
+</ul>
 
       
     </div>
@@ -416,7 +455,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ElasticSearch/" rel="tag"># ElasticSearch</a>
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+            <a href="/tags/事务/" rel="tag"># 事务</a>
           
         </div>
       
@@ -429,8 +470,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/05/docs/redis问题总结/" rel="next" title="Redis 问题总结">
-                <i class="fa fa-chevron-left"></i> Redis 问题总结
+              <a href="/2019/08/26/docs/Java线程池总结/" rel="next" title="Java线程池总结">
+                <i class="fa fa-chevron-left"></i> Java线程池总结
               </a>
             
           </div>
@@ -438,10 +479,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/08/24/docs/ElasticSearch工作原理/" rel="prev" title="ElasticSearch工作原理">
-                ElasticSearch工作原理 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -601,7 +638,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ElasticSearch如何实现分布式的"><span class="nav-number">1.</span> <span class="nav-text">ElasticSearch如何实现分布式的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ElasticSearch的基本存储结构"><span class="nav-number">1.1.</span> <span class="nav-text">ElasticSearch的基本存储结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式架构"><span class="nav-number">1.2.</span> <span class="nav-text">分布式架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#宕机方案"><span class="nav-number">1.3.</span> <span class="nav-text">宕机方案</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#事务"><span class="nav-number">1.</span> <span class="nav-text">事务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#事务的特性"><span class="nav-number">1.1.</span> <span class="nav-text">事务的特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发事务所带来的问题"><span class="nav-number">1.2.</span> <span class="nav-text">并发事务所带来的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务的隔离级别"><span class="nav-number">1.3.</span> <span class="nav-text">事务的隔离级别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring中事务"><span class="nav-number">1.4.</span> <span class="nav-text">Spring中事务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#传播行为"><span class="nav-number">1.4.1.</span> <span class="nav-text">传播行为</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隔离属性"><span class="nav-number">1.4.2.</span> <span class="nav-text">隔离属性</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -780,9 +817,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2019/08/23/docs/es分布式架构原理/';
-          this.page.identifier = '2019/08/23/docs/es分布式架构原理/';
-          this.page.title = 'es分布式架构原理';
+          this.page.url = 'http://yoursite.com/2019/08/27/docs/事务介绍/';
+          this.page.identifier = '2019/08/27/docs/事务介绍/';
+          this.page.title = '事务介绍';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://laobo.disqus.com/embed.js';
