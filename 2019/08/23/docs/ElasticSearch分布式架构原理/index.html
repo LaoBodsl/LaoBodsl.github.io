@@ -62,7 +62,7 @@
 
 
 
-  <meta name="keywords" content="Redis,数据库,">
+  <meta name="keywords" content="ElasticSearch,">
 
 
 
@@ -73,18 +73,20 @@
 
 
 
-<meta name="description" content="Redis 问题总结Redis特性有哪些 Redis使用标准C编写实现，并且所有数据加载到内存，所以速度特别快 可以将Redis看做”数据结构服务器“。目前Redis支持五种数据结构（String，Hash，List，Set，Sorted Set） 持久化，由于所有数据保存在内存中，所以对数据的更新将异步的保存到磁盘上，Redis使用一些策略保存数据，比如更新时间或者更新次数，数据超过内存，使用s">
-<meta name="keywords" content="Redis,数据库">
+<meta name="description" content="ElasticSearch如何实现分布式的搜索之前主要是lucene比较流行，而ElasticSearch就是基于lucene的分布式搜索引擎 ElasticSearch的基本存储结构index(索引) -&amp;gt; type(移除) -&amp;gt; mapping(移除) -&amp;gt; document （文档）-&amp;gt; field(字段) 分布式架构 每个索引可以分为多个shard（分片），每个sh">
+<meta name="keywords" content="ElasticSearch">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Redis 问题总结">
-<meta property="og:url" content="http://yoursite.com/2019/08/05/docs/redis问题总结/index.html">
+<meta property="og:title" content="es分布式架构原理">
+<meta property="og:url" content="http://yoursite.com/2019/08/23/docs/ElasticSearch分布式架构原理/index.html">
 <meta property="og:site_name" content="Steins Gate">
-<meta property="og:description" content="Redis 问题总结Redis特性有哪些 Redis使用标准C编写实现，并且所有数据加载到内存，所以速度特别快 可以将Redis看做”数据结构服务器“。目前Redis支持五种数据结构（String，Hash，List，Set，Sorted Set） 持久化，由于所有数据保存在内存中，所以对数据的更新将异步的保存到磁盘上，Redis使用一些策略保存数据，比如更新时间或者更新次数，数据超过内存，使用s">
+<meta property="og:description" content="ElasticSearch如何实现分布式的搜索之前主要是lucene比较流行，而ElasticSearch就是基于lucene的分布式搜索引擎 ElasticSearch的基本存储结构index(索引) -&amp;gt; type(移除) -&amp;gt; mapping(移除) -&amp;gt; document （文档）-&amp;gt; field(字段) 分布式架构 每个索引可以分为多个shard（分片），每个sh">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-23T08:41:35.724Z">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/006y8mN6ly1g6akc5njb3j30qr0fawf2.jpg">
+<meta property="og:updated_time" content="2019-08-29T02:48:54.590Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Redis 问题总结">
-<meta name="twitter:description" content="Redis 问题总结Redis特性有哪些 Redis使用标准C编写实现，并且所有数据加载到内存，所以速度特别快 可以将Redis看做”数据结构服务器“。目前Redis支持五种数据结构（String，Hash，List，Set，Sorted Set） 持久化，由于所有数据保存在内存中，所以对数据的更新将异步的保存到磁盘上，Redis使用一些策略保存数据，比如更新时间或者更新次数，数据超过内存，使用s">
+<meta name="twitter:title" content="es分布式架构原理">
+<meta name="twitter:description" content="ElasticSearch如何实现分布式的搜索之前主要是lucene比较流行，而ElasticSearch就是基于lucene的分布式搜索引擎 ElasticSearch的基本存储结构index(索引) -&amp;gt; type(移除) -&amp;gt; mapping(移除) -&amp;gt; document （文档）-&amp;gt; field(字段) 分布式架构 每个索引可以分为多个shard（分片），每个sh">
+<meta name="twitter:image" content="http://ww4.sinaimg.cn/large/006y8mN6ly1g6akc5njb3j30qr0fawf2.jpg">
 
 
 
@@ -114,13 +116,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/08/05/docs/redis问题总结/">
+  <link rel="canonical" href="http://yoursite.com/2019/08/23/docs/ElasticSearch分布式架构原理/">
 
 
 
 
 
-  <title>Redis 问题总结 | Steins Gate</title>
+  <title>es分布式架构原理 | Steins Gate</title>
   
 
 
@@ -257,7 +259,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/05/docs/redis问题总结/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/23/docs/ElasticSearch分布式架构原理/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="老博">
@@ -274,7 +276,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Redis 问题总结</h1>
+          <h1 class="post-title" itemprop="name headline">es分布式架构原理</h1>
         
 
         <div class="post-meta">
@@ -286,8 +288,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-05T20:39:21+08:00">
-                2019-08-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-23T16:47:18+08:00">
+                2019-08-23
               </time>
             
 
@@ -309,8 +311,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Redis/" itemprop="url" rel="index">
-                    <span itemprop="name">Redis</span>
+                  <a href="/categories/分布式搜索引擎/" itemprop="url" rel="index">
+                    <span itemprop="name">分布式搜索引擎</span>
                   </a>
                 </span>
 
@@ -327,8 +329,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/08/05/docs/redis问题总结/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/08/05/docs/redis问题总结/" itemprop="commentCount"></span>
+                <a href="/2019/08/23/docs/ElasticSearch分布式架构原理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/08/23/docs/ElasticSearch分布式架构原理/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -350,7 +352,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  493
+                  339
                 </span>
               
 
@@ -387,30 +389,16 @@
       
 
       
-        <h1 id="Redis-问题总结"><a href="#Redis-问题总结" class="headerlink" title="Redis 问题总结"></a>Redis 问题总结</h1><h2 id="Redis特性有哪些"><a href="#Redis特性有哪些" class="headerlink" title="Redis特性有哪些"></a>Redis特性有哪些</h2><ul>
-<li>Redis使用标准C编写实现，并且所有数据加载到内存，所以速度特别快</li>
-<li>可以将Redis看做”数据结构服务器“。目前Redis支持五种数据结构（String，Hash，List，Set，Sorted Set）</li>
-<li>持久化，由于所有数据保存在内存中，所以对数据的更新将异步的保存到磁盘上，Redis使用一些策略保存数据，比如更新时间或者更新次数，数据超过内存，使用swap保证数据。</li>
-<li>自动操作。Redis对不同的数据类型操作都是自动的，因此，设置或者增加Key值，从一个集合中增加或者删除一个元素都能安全的操作。</li>
-<li>支持多种语言</li>
-<li>主-从复制。当主节点出现故障时，可以迅速从从节点进行恢复。读写分离，主节点负责写，从节点负责读，多个从节点分开读。</li>
-</ul>
-<h2 id="Redis的单进程和单线程模型"><a href="#Redis的单进程和单线程模型" class="headerlink" title="Redis的单进程和单线程模型"></a>Redis的单进程和单线程模型</h2><p>*多路I/O非阻塞模型，select/poll/epoll模型</p>
-<h2 id="Redis大量数据插入"><a href="#Redis大量数据插入" class="headerlink" title="Redis大量数据插入"></a>Redis大量数据插入</h2><ul>
-<li>使用pipe mode，创建一个包含Redis命令集的文本文件。</li>
-</ul>
-<h2 id="提取固定前缀的Key"><a href="#提取固定前缀的Key" class="headerlink" title="提取固定前缀的Key"></a>提取固定前缀的Key</h2><ul>
-<li>使用keys指令可以提取指定模式的key列表，但是由于Redis是单线程的，会造成阻塞。可以使用scan命令，但是会有一定的重复，可以提取之后，再进行一次去重。</li>
-</ul>
-<h2 id="大量key同时过期"><a href="#大量key同时过期" class="headerlink" title="大量key同时过期"></a>大量key同时过期</h2><ul>
-<li>同时过期会有一定的卡顿，所以需要给时间加上一个随机，分散一点</li>
-</ul>
-<h2 id="Redis如何做持久化"><a href="#Redis如何做持久化" class="headerlink" title="Redis如何做持久化"></a>Redis如何做持久化</h2><ul>
-<li><p>bgsave全镜持久化，因为save会阻塞进程，使用bgsave可以避免这个问题，bgsave通过fork一个子进程来进行bgsave操作</p>
-</li>
-<li><p>aof做增量持久化，由于bgsave耗费的时间比较长，不够实时。如果突然停机的话会造成数据丢失。所以需要AOF进行必要的补充。</p>
-</li>
-</ul>
+        <h1 id="ElasticSearch如何实现分布式的"><a href="#ElasticSearch如何实现分布式的" class="headerlink" title="ElasticSearch如何实现分布式的"></a>ElasticSearch如何实现分布式的</h1><p>搜索之前主要是lucene比较流行，而ElasticSearch就是基于lucene的分布式搜索引擎</p>
+<h2 id="ElasticSearch的基本存储结构"><a href="#ElasticSearch的基本存储结构" class="headerlink" title="ElasticSearch的基本存储结构"></a>ElasticSearch的基本存储结构</h2><p>index(索引) -&gt; type(移除) -&gt; mapping(移除) -&gt; document （文档）-&gt; field(字段)</p>
+<h2 id="分布式架构"><a href="#分布式架构" class="headerlink" title="分布式架构"></a>分布式架构</h2><p><img src="http://ww4.sinaimg.cn/large/006y8mN6ly1g6akc5njb3j30qr0fawf2.jpg" alt=""></p>
+<p>每个索引可以分为多个shard（分片），每个shard可以存储部分数据。这样有两个好处。</p>
+<ol>
+<li>支持横向扩展。比如你现在有3T的数据，分成3个shard。每个shard就是1T的数据。若现在数据增长到4T了，我们就重新建立一个有4个shard的索引，将数据导进去。</li>
+<li>提高性能。多个数据分布在多个shard，就是多台服务器。所有的操作都是在多台机器上并行的分布式执行。提搞了吞吐量和性能。</li>
+</ol>
+<p>每个shard的数据都是多个备份的，每个shard都有一个primary shard，负责写入数据。还有几个replica shard。primary shard写入数据之后，会将数据同步到其他几个replica shard上去。</p>
+<h2 id="宕机方案"><a href="#宕机方案" class="headerlink" title="宕机方案"></a>宕机方案</h2><p>es集群有多个节点。会自动选取其中一个作为master节点。如果非master节点宕机，会由master节点让那个宕机节点上的primary shard的身份转移到其他机器上的replica shard。接着你修复了好了之后，在分配过去。</p>
 
       
     </div>
@@ -428,9 +416,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Redis/" rel="tag"># Redis</a>
-          
-            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+            <a href="/tags/ElasticSearch/" rel="tag"># ElasticSearch</a>
           
         </div>
       
@@ -443,8 +429,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/08/docs/消息队列/" rel="next" title="消息队列介绍">
-                <i class="fa fa-chevron-left"></i> 消息队列介绍
+              <a href="/2019/08/05/docs/redis问题总结/" rel="next" title="Redis 问题总结">
+                <i class="fa fa-chevron-left"></i> Redis 问题总结
               </a>
             
           </div>
@@ -453,8 +439,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/08/23/docs/ElasticSearch分布式架构原理/" rel="prev" title="es分布式架构原理">
-                es分布式架构原理 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/08/24/docs/ElasticSearch工作原理/" rel="prev" title="ElasticSearch工作原理">
+                ElasticSearch工作原理 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -615,7 +601,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis-问题总结"><span class="nav-number">1.</span> <span class="nav-text">Redis 问题总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis特性有哪些"><span class="nav-number">1.1.</span> <span class="nav-text">Redis特性有哪些</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis的单进程和单线程模型"><span class="nav-number">1.2.</span> <span class="nav-text">Redis的单进程和单线程模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis大量数据插入"><span class="nav-number">1.3.</span> <span class="nav-text">Redis大量数据插入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提取固定前缀的Key"><span class="nav-number">1.4.</span> <span class="nav-text">提取固定前缀的Key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大量key同时过期"><span class="nav-number">1.5.</span> <span class="nav-text">大量key同时过期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis如何做持久化"><span class="nav-number">1.6.</span> <span class="nav-text">Redis如何做持久化</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ElasticSearch如何实现分布式的"><span class="nav-number">1.</span> <span class="nav-text">ElasticSearch如何实现分布式的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ElasticSearch的基本存储结构"><span class="nav-number">1.1.</span> <span class="nav-text">ElasticSearch的基本存储结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式架构"><span class="nav-number">1.2.</span> <span class="nav-text">分布式架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#宕机方案"><span class="nav-number">1.3.</span> <span class="nav-text">宕机方案</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -794,9 +780,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2019/08/05/docs/redis问题总结/';
-          this.page.identifier = '2019/08/05/docs/redis问题总结/';
-          this.page.title = 'Redis 问题总结';
+          this.page.url = 'http://yoursite.com/2019/08/23/docs/ElasticSearch分布式架构原理/';
+          this.page.identifier = '2019/08/23/docs/ElasticSearch分布式架构原理/';
+          this.page.title = 'es分布式架构原理';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://laobo.disqus.com/embed.js';
