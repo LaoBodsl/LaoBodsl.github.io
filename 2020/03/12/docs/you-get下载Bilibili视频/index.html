@@ -83,7 +83,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/00831rSTly1gcrjb9eov9j31dq0hk0u2.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/00831rSTly1gcrjdvxhh6j31dy0e20tg.jpg">
-<meta property="og:updated_time" content="2020-03-12T15:01:01.411Z">
+<meta property="og:updated_time" content="2020-03-12T15:13:32.554Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="you-get下载Bilibili视频">
 <meta name="twitter:description" content="you-get介绍简单的来说就是一个资源抓取，主要用来下载各大网站的视频，支持的站点挺多，可下载各种各样的资源。主要用来国内外各大视频网站的视频。 使用环境 Python3 pip3通过包管理器可以轻松的安装you-get  1pip3 install you-get 下载哔哩哔哩视频教程下载单个视频因为B站的原因，you-get在下载的时候稍微有点问题。网络上大部分教程使用的命令都是 1you-">
@@ -353,7 +353,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  230
+                  275
                 </span>
               
 
@@ -401,7 +401,8 @@
 <p>在使用这个命令时会如下错误<br><img src="https://tva1.sinaimg.cn/large/00831rSTly1gcrjb9eov9j31dq0hk0u2.jpg" alt=""><br>这个bug已经被修复，我们只需要在命令中加入“-k”参数即可<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">you-get -k https://www.bilibili.com/video/av50868246</span><br></pre></td></tr></table></figure></p>
 <p><img src="https://tva1.sinaimg.cn/large/00831rSTly1gcrjdvxhh6j31dy0e20tg.jpg" alt=""></p>
 <h3 id="下载播放列表中所有视频"><a href="#下载播放列表中所有视频" class="headerlink" title="下载播放列表中所有视频"></a>下载播放列表中所有视频</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">you-get -k -playlist "url"</span><br></pre></td></tr></table></figure>
-<h3 id="特别注意"><a href="#特别注意" class="headerlink" title="特别注意"></a>特别注意</h3><p>可以使用参数“-o”下载路径<br><code>`</code>shell<br>you-get -k -o “dir” “url”</p>
+<h3 id="特别注意"><a href="#特别注意" class="headerlink" title="特别注意"></a>特别注意</h3><p>可以使用参数“-o”设定下载路径<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">you-get -k -o "dir" "url"</span><br></pre></td></tr></table></figure></p>
+<p>如果需要暂停下载按control+c即可，恢复下载重新输入you-get命令即可重新开始下载，可自动跳过已下载项目</p>
 
       
     </div>
